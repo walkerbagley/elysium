@@ -1,0 +1,6 @@
+Query(
+  Lambda(
+    "_",
+    Logout(false)
+  )
+)

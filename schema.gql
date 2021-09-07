@@ -1,0 +1,38 @@
+type User {
+	email: String! @unique
+	purchases: [Purchases!]! @relation
+}
+
+type Package {
+	bundleIdentifier: String! @unique
+	name: String!
+	versions: [Version!]! @relation
+	# getActiveVersions: [Version!]! @resolver
+}
+
+type Version {
+	package: Package! @relation
+	string: String!
+	isActive: Boolean!
+	downloadUrl: String!
+}
+
+type Purchases {
+	user: User! @relation
+	package: Package! @relation
+}
+
+type Query {
+	getPackage(bundleIdentifier: String!): Package!
+}
+
+type Login @embedded {
+	user: User!
+	secret: String!
+}
+
+type Mutation {
+	register(email: String!, password: String!): User! @resolver
+	login(email: String!, password: String!): Login! @resolver
+	logout: Boolean! @resolver
+}
